@@ -1,205 +1,200 @@
-# PR Review Command
+# PR 评审命令
 
-## Purpose
+## 目的
 
-Reviews code changes in the current branch against requirements, best practices, and project standards.
+审查当前分支中的代码变更，依据需求、最佳实践与项目规范。
 
-## Usage
+## 用法
 
 ```bash
 /pr:review <ticket-id>
 ```
 
-**Examples**:
+**示例**：
 
-- JIRA ticket: `/pr:review RI-1234`
-- GitHub issue: `/pr:review 456`
+- JIRA 工单：`/pr:review RI-1234`
+- GitHub Issue：`/pr:review 456`
 
-## Prerequisites
+## 前置条件
 
-1. Checkout the branch to review locally
-2. Ensure the ticket ID is valid and accessible
-3. Have JIRA MCP tool configured (if using JIRA integration)
+1. 在本地检出需要评审的分支
+2. 确认工单 ID 有效且可访问
+3. 已配置 JIRA MCP 工具（如使用 JIRA 集成）
 
-## Process
+## 流程
 
-### 1. Gather Context
+### 1. 收集上下文
 
-- Fetch JIRA ticket details (if available)
-- Read requirements and acceptance criteria
-- Identify affected files in the PR
-- Review recent commits
+- 获取 JIRA 工单详情（如可用）
+- 阅读需求与验收标准
+- 识别 PR 中受影响的文件
+- 查看近期提交记录
 
-### 2. Code Analysis
+### 2. 代码分析
 
-Analyze the changes against:
+根据以下方面分析变更：
 
-- **Code Quality**: Linting rules, TypeScript types, complexity
-- **Testing**: Test coverage, test quality, edge cases
-- **Performance**: Rendering optimizations
-- **Security**: Input validation, XSS prevention, credential handling
-- **Accessibility**: ARIA labels, keyboard navigation, semantic HTML
-- **Best Practices**: React patterns, Redux usage, NestJS conventions
+- **代码质量**：Lint 规则、TypeScript 类型、复杂度
+- **测试**：测试覆盖率、测试质量、边界用例
+- **性能**：渲染优化
+- **安全**：输入校验、XSS 防护、凭证处理
+- **可访问性**：ARIA、键盘导航、语义化 HTML
+- **最佳实践**：React 模式、Redux 使用、NestJS 约定
 
-### 3. Requirements Check
+### 3. 需求核对
 
-- Verify all acceptance criteria are met
-- Check for missing functionality
-- Validate edge case handling
-- Ensure proper error messages
+- 验证所有验收标准已满足
+- 检查是否有缺失功能
+- 验证边界情况处理
+- 确保错误信息合理
 
-### 4. Testing Validation
+### 4. 测试验证
 
-- Unit test coverage (80% minimum)
-- Integration tests for API endpoints
-- Component tests for React components
-- E2E tests for critical flows
-- No fixed timeouts or magic numbers
-- Use of faker for test data
+- 单元测试覆盖率（最低 80%）
+- API 端点的集成测试
+- React 组件测试
+- 关键流程的 E2E 测试
+- 不使用固定超时或魔法数
+- 使用 faker 生成测试数据
 
-### 5. Generate Report
+### 5. 生成报告
 
-Create a markdown report in `docs/reviews/pr-<ticket-id>-<date>.md` with:
+在 `docs/reviews/pr-<ticket-id>-<date>.md` 创建 Markdown 报告，包含：
 
-**Note**: Use appropriate ticket reference format:
+**注意**：使用正确的工单引用格式：
 
-- JIRA tickets: `pr-RI-1234-2024-11-20.md`
-- GitHub issues: `pr-456-2024-11-20.md`
+- JIRA 工单：`pr-RI-1234-2024-11-20.md`
+- GitHub Issue：`pr-456-2024-11-20.md`
 
-Report should include:
+报告应包含：
 
-- **Summary**: Overview of changes
-- **Strengths**: What was done well
-- **Issues**: Categorized by severity (Critical, High, Medium, Low)
-- **Suggestions**: Improvements and optimizations
-- **Requirements Coverage**: Acceptance criteria checklist
-- **Testing Assessment**: Coverage and quality analysis
-- **Risk Assessment**: Potential issues or impacts
+- **摘要**：变更概览
+- **优点**：做得好的地方
+- **问题**：按严重级别（Critical/High/Medium/Low）分类
+- **建议**：改进与优化
+- **需求覆盖**：验收标准检查清单
+- **测试评估**：覆盖率与质量分析
+- **风险评估**：潜在问题或影响
 
-## Review Checklist
+## 评审检查清单
 
-### Code Quality
+### 代码质量
 
-- [ ] No linting errors
-- [ ] TypeScript types are proper (no `any` without justification)
-- [ ] Code follows project conventions
-- [ ] No console.log statements
-- [ ] Import order is correct
-- [ ] Cognitive complexity within limits
-- [ ] No duplicate code
+- [ ] 无 Lint 错误
+- [ ] TypeScript 类型合理（不无故使用 `any`）
+- [ ] 代码遵循项目约定
+- [ ] 无 console.log 语句
+- [ ] 导入顺序正确
+- [ ] 认知复杂度在可控范围
+- [ ] 无重复代码
 
-### Testing
+### 测试
 
-- [ ] Unit tests added/updated
-- [ ] Test coverage meets thresholds
-- [ ] Tests use faker for data generation
-- [ ] No fixed timeouts in tests
-- [ ] Edge cases are tested
-- [ ] Mocks are properly configured
+- [ ] 已添加/更新单元测试
+- [ ] 测试覆盖率满足阈值
+- [ ] 测试使用 faker 生成数据
+- [ ] 测试中不使用固定超时
+- [ ] 边界用例已覆盖
+- [ ] Mock 配置合理
 
-### React/Frontend (if applicable)
+### React/前端（如适用）
 
-- [ ] Functional components with hooks
-- [ ] Proper state management (Redux vs local)
-- [ ] Effects cleanup properly
-- [ ] No unnecessary re-renders
-- [ ] Accessibility considerations
-- [ ] Styled-components for styling (no new SCSS modules)
-- [ ] Proper error boundaries
-- [ ] Component folder structure follows guidelines
+- [ ] 使用函数组件与 Hooks
+- [ ] 状态管理合理（Redux 与本地状态取舍）
+- [ ] Effect 正确清理
+- [ ] 无不必要的重复渲染
+- [ ] 考虑可访问性
+- [ ] 使用 styled-components（不新增 SCSS Modules）
+- [ ] 错误边界合理
+- [ ] 组件目录结构符合规范
 
-### NestJS/Backend (if applicable)
+### NestJS/后端（如适用）
 
-- [ ] Dependency injection used properly
-- [ ] DTOs for validation
-- [ ] Proper error handling
-- [ ] Swagger documentation
-- [ ] Service layer separation
-- [ ] Database transactions where needed
+- [ ] 正确使用依赖注入
+- [ ] 使用 DTO 进行校验
+- [ ] 错误处理合理
+- [ ] Swagger 文档完善
+- [ ] 服务层职责明确
+- [ ] 需要时使用数据库事务
 
-### Performance
+### 性能
 
-- [ ] No performance regressions
-- [ ] Large lists virtualized
-- [ ] Routes lazy loaded
-- [ ] Expensive operations memoized
-- [ ] Bundle size impact acceptable
+- [ ] 无性能回退
+- [ ] 大型列表虚拟化
+- [ ] 路由懒加载
+- [ ] 开销较大的操作已 memo 化
+- [ ] 包体积影响可接受
 
-### Security
+### 安全
 
-- [ ] Input validation
-- [ ] Output sanitization
-- [ ] No sensitive data in logs
-- [ ] Proper authentication/authorization
-- [ ] SQL injection prevention (if applicable)
+- [ ] 输入校验
+- [ ] 输出清洗
+- [ ] 日志中无敏感信息
+- [ ] 认证/鉴权合理
+- [ ] 防 SQL 注入（如适用）
 
-### Documentation
+### 文档
 
-- [ ] README updated if needed
-- [ ] Complex logic documented
-- [ ] API documentation updated
-- [ ] Breaking changes noted
+- [ ] 必要时更新 README
+- [ ] 为复杂逻辑添加文档
+- [ ] 更新 API 文档
+- [ ] 标注破坏性变更
 
-## Example Output
+## 输出示例
 
-**Note**: Use appropriate ticket format (RI-1234 for JIRA or #456 for GitHub issues)
+**注意**：使用正确的工单格式（JIRA 用 RI-1234，GitHub Issue 用 #456）
 
 ```markdown
-# PR Review: RI-1234 - Add User Profile Editing
+# PR 评审：RI-1234 - 用户资料编辑
 
-**Date**: 2024-11-20
-**Reviewer**: AI Assistant
-**Branch**: feature/RI-1234/user-profile-editing
+**日期**：2024-11-20
+**评审者**：AI Assistant
+**分支**：feature/RI-1234/user-profile-editing
 
-## Summary
+## 摘要
 
-This PR implements user profile editing functionality including UI components,
-API endpoints, and data persistence. The implementation follows project
-standards with good test coverage.
+该 PR 实现了用户资料编辑功能，包括 UI 组件、API 端点与数据持久化。实现遵循项目标准，测试覆盖良好。
 
-## High Priority Issues
+## 高优先级问题
 
-1. **Missing Input Validation** (Security)
-   - File: `redisinsight/api/src/user/user.service.ts:45`
-   - Issue: Email validation missing on backend
-   - Recommendation: Add class-validator decorator to DTO
+1. **缺少输入校验**（安全）
+   - 文件：`redisinsight/api/src/user/user.service.ts:45`
+   - 问题：后端缺少邮箱校验
+   - 建议：在 DTO 上添加 class-validator 装饰器
 
-## Medium Priority Issues
+## 中优先级问题
 
-1. **Performance Concern** (Performance)
+1. **性能关注**（性能）
+   - 文件：`redisinsight/ui/src/components/UserProfile.tsx:78`
+   - 问题：渲染中存在内联函数
+   - 建议：提取并使用 useCallback
 
-   - File: `redisinsight/ui/src/components/UserProfile.tsx:78`
-   - Issue: Inline function in render
-   - Recommendation: Extract to useCallback
+2. **测试不稳定风险**（测试）
+   - 文件：`redisinsight/ui/src/components/UserProfile.spec.tsx:45`
+   - 问题：直接检查状态而未使用 waitFor
+   - 建议：断言外包在 waitFor 中
 
-2. **Test Flakiness Risk** (Testing)
-   - File: `redisinsight/ui/src/components/UserProfile.spec.tsx:45`
-   - Issue: Direct state check without waitFor
-   - Recommendation: Wrap assertion in waitFor
+## 低优先级问题
 
-## Low Priority Issues
+1. **代码风格**（样式）
+   - 文件：多处
+   - 问题：导入顺序不一致
+   - 建议：运行 `yarn prettier:fix`
 
-1. **Code Style** (Style)
-   - File: Multiple files
-   - Issue: Inconsistent import ordering
-   - Recommendation: Run `yarn prettier:fix`
+## 风险评估
 
-## Risk Assessment
+**低风险** —— 实现经过良好测试，仅存在可在合并前解决的小问题。无破坏性变更或安全漏洞。
 
-**Low Risk** - Well-tested implementation with minor issues that can be
-addressed before merge. No breaking changes or security vulnerabilities.
+## 建议
 
-## Recommendation
-
-**Approve with comments** - Address high priority issues before merging.
-Consider suggestions for future improvements.
+**有条件批准** —— 合并前解决高优先级问题。后续可考虑建议项以进一步优化。
 ```
 
-## Notes
+## 备注
 
-- Focus on constructive feedback
-- Prioritize issues by severity
-- Be specific with file locations and line numbers
-- Provide actionable recommendations
-- Balance criticism with recognition of good practices
-- Consider the broader impact of changes
+- 专注于建设性反馈
+- 按严重程度优先处理问题
+- 精确到具体文件位置与行号
+- 提供可执行的建议
+- 在指出问题的同时认可好的实践
+- 考量变更的更广泛影响

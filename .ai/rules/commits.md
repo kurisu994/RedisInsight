@@ -2,9 +2,9 @@
 alwaysApply: true
 ---
 
-# Commit Message Guidelines
+# 提交信息指南
 
-Follow **Conventional Commits** format:
+遵循 **Conventional Commits** 格式：
 
 ```
 <type>(<scope>): <subject>
@@ -14,19 +14,19 @@ Follow **Conventional Commits** format:
 <footer>
 ```
 
-## Commit Types
+## 提交类型
 
-- `feat` - New feature
-- `fix` - Bug fix
-- `refactor` - Code refactoring
-- `test` - Adding or updating tests
-- `docs` - Documentation changes
-- `chore` - Maintenance tasks
-- `style` - Code style changes (formatting)
-- `perf` - Performance improvements
-- `ci` - CI/CD changes
+- `feat` —— 新特性
+- `fix` —— 缺陷修复
+- `refactor` —— 代码重构
+- `test` —— 添加或更新测试
+- `docs` —— 文档变更
+- `chore` —— 维护任务
+- `style` —— 代码风格变更（格式化）
+- `perf` —— 性能优化
+- `ci` —— CI/CD 变更
 
-## Examples
+## 示例
 
 ```bash
 feat(ui): add user search functionality
@@ -54,14 +54,14 @@ docs: update API endpoint documentation
 chore: upgrade React to version 18.2
 ```
 
-## Best Practices
+## 最佳实践
 
-### ✅ Good Commits
+### ✅ 良好提交
 
-- Clear, descriptive subject line
-- Atomic changes (one logical change per commit)
-- Reference issue/ticket in body
-- Explain **why**, not just **what**
+- 主题行清晰且具描述性
+- 原子性变更（每次提交仅包含一个逻辑变更）
+- 在正文中引用问题/工单
+- 解释**为什么**，而不仅是**做了什么**
 
 ```bash
 feat(ui): add user profile editing
@@ -72,20 +72,20 @@ name, email, and avatar. Includes validation and error handling.
 References: #RI-123
 ```
 
-### ❌ Bad Commits
+### ❌ 不良提交
 
 ```bash
-# Too vague
+# 过于含糊
 fix stuff
 WIP
 update
 
-# Too broad
+# 过于宽泛
 add feature, fix bugs, refactor code, update tests
 ```
 
-## Issue References
+## 问题引用
 
-- **JIRA (internal)**: `References: #RI-123` or `Fixes #RI-123`
-- **GitHub (open source)**: `Fixes #456` or `Closes #456`
-- Use `#` for auto-linking in commit messages
+- **JIRA（内部）**：`References: #RI-123` 或 `Fixes #RI-123`
+- **GitHub（开源）**：`Fixes #456` 或 `Closes #456`
+- 在提交信息中使用 `#` 进行自动链接

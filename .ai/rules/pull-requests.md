@@ -2,71 +2,71 @@
 alwaysApply: true
 ---
 
-# Pull Request Guidelines
+# Pull Request 指南
 
-## Creating a PR
+## 创建 PR
 
-### PR Title
+### PR 标题
 
-Include issue number at the start:
+在开头包含问题编号：
 
 ```
 RI-123 Add user profile editing
 #456 Fix memory leak in connection pool
 ```
 
-### PR Description Template
+### PR 描述模板
 
 ```markdown
 # What
 
-Describe what was changed.
+描述改动内容。
 
 # Testing
 
-Describe how to test the changes.
+描述如何验证这些改动。
 
 ---
 
 Closes #RI-123
 ```
 
-**PR Description Guidelines:**
+**PR 描述指南：**
 
-- **Keep it concise** - Avoid verbose descriptions
-- **Focus on high-level changes** - Don't list every code change in the #What section
-- **Brief and to the point** - The diff shows the details; describe the "why" and "what" at a high level
-- **Technical decisions** - Only mention significant architectural or design decisions if relevant
+- **保持简洁** —— 避免冗长描述
+- **聚焦高层变更** —— 不要在 #What 中罗列每一处代码改动
+- **简明扼要** —— 具体细节在 diff 中，描述高层的 “为什么/做了什么”
+- **技术决策** —— 仅在相关时提及重要的架构或设计决策
 
-## Review Process
+## 评审流程
 
-### As PR Author
+### 作为 PR 作者
 
-- **Respond to all comments** - Address every piece of feedback
-- **Don't take feedback personally** - Reviews improve code quality
-- **Update code based on feedback** - Make requested changes
-- **Mark conversations as resolved** - After addressing feedback
-- **Keep PR up to date** - Rebase on main regularly
+- **回复所有评论** —— 处理每一条反馈
+- **不要将反馈视为人身攻击** —— 评审旨在提升代码质量
+- **根据反馈更新代码** —— 按要求修改
+- **在处理后标记会话为已解决**
+- **保持 PR 与时俱进** —— 定期在 main 上进行 rebase
 
-### As PR Reviewer
+### 作为 PR 评审者
 
-- **Be constructive and respectful** - Focus on improvement
-- **Focus on logic, not style** - Linter handles formatting
-- **Check for**:
-  - Logic errors and edge cases
-  - Performance issues
-  - Security concerns
-  - Test coverage
-  - Missing documentation
-  - Architectural concerns
+- **保持建设性与尊重** —— 以改进为目标
+- **关注逻辑而非风格** —— Linter 会处理格式化
+- **检查以下方面**：
+  - 逻辑错误与边界情况
+  - 性能问题
+  - 安全隐患
+  - 测试覆盖率
+  - 文档缺失
+  - 架构层面的顾虑
 
-### Review Checklist
+### 评审检查清单
 
-- [ ] Code follows project patterns
-- [ ] Tests are comprehensive
-- [ ] No console.log or debug code
-- [ ] TypeScript types are proper
-- [ ] Error handling is adequate
-- [ ] Documentation is updated
-- [ ] No security vulnerabilities
-- [ ] Performance is acceptable
+- [ ] 代码遵循项目模式
+- [ ] 测试全面
+- [ ] 无 console.log 或调试代码
+- [ ] TypeScript 类型合理
+- [ ] 错误处理充分
+- [ ] 文档已更新
+- [ ] 无安全漏洞
+- [ ] 性能可接受

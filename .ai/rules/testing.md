@@ -2,17 +2,17 @@
 alwaysApply: true
 ---
 
-# Testing Standards and Practices
+# 测试标准与实践
 
-## Core Principles
+## 核心原则
 
-- **Write tests for all new features**
-- Follow **AAA pattern**: Arrange, Act, Assert
-- Use **descriptive test names**: "should do X when Y"
-- **CRITICAL**: Never use fixed time waits - tests must be deterministic
-- **CRITICAL**: Use faker library (@faker-js/faker) for test data
+- **为所有新特性编写测试**
+- 遵循 **AAA 模式**：Arrange、Act、Assert
+- 使用**具描述性的测试名**：例如 “should do X when Y”
+- **关键**：不要使用固定时间等待——测试必须可重复且确定性
+- **关键**：使用 faker 库（@faker-js/faker）生成测试数据
 
-## Test Organization
+## 测试组织
 
 ```typescript
 describe('FeatureService', () => {
@@ -28,17 +28,17 @@ describe('FeatureService', () => {
 });
 ```
 
-## Frontend Testing (Jest + Testing Library)
+## 前端测试（Jest + Testing Library）
 
-### CRITICAL: Always Use Shared `renderComponent` Helper
+### 关键：始终使用共享的 `renderComponent` 助手
 
-**Create a `renderComponent` helper for each component test file**:
+**为每个组件测试文件创建一个 `renderComponent` 助手**：
 
 ```typescript
 import { faker } from '@faker-js/faker';
 
 describe('MyComponent', () => {
-  // Define default props with faker
+  // 使用 faker 定义默认 props
   const defaultProps: MyComponentProps = {
     id: faker.string.uuid(),
     name: faker.person.fullName(),
@@ -46,7 +46,7 @@ describe('MyComponent', () => {
     onComplete: jest.fn(),
   };
 
-  // Shared render helper
+  // 共享的渲染助手
   const renderComponent = (propsOverride?: Partial<MyComponentProps>) => {
     const props = { ...defaultProps, ...propsOverride };
 
@@ -79,16 +79,16 @@ describe('MyComponent', () => {
 });
 ```
 
-**Benefits**:
+**好处**：
 
-- Centralized setup (providers, router, theme)
-- Default props defined once
-- Easy prop overrides per test
-- No duplicate setup code
+- 集中化设置（providers、路由、主题）
+- 默认 props 仅定义一次
+- 每个测试可轻松覆盖 props
+- 无重复的设置代码
 
-### Complex Component Setup
+### 复杂组件的设置
 
-For components requiring Router, ThemeProvider, etc., include them in `renderComponent`:
+对需要 Router、ThemeProvider 等的组件，将它们包含在 `renderComponent` 中：
 
 ```typescript
 const renderComponent = (propsOverride?: Partial<Props>) => {
@@ -106,9 +106,9 @@ const renderComponent = (propsOverride?: Partial<Props>) => {
 }
 ```
 
-### Testing with Redux
+### Redux 相关的测试
 
-Create a test store with `configureStore` for Redux-connected components:
+对连接 Redux 的组件，使用 `configureStore` 创建测试 store：
 
 ```typescript
 const createTestStore = (initialState = {}) => {
@@ -120,48 +120,48 @@ const createTestStore = (initialState = {}) => {
 
 const renderComponent = (propsOverride?: Partial<Props>, storeState = {}) => {
   const testStore = createTestStore(storeState);
-  // render with testStore
+  // 使用 testStore 渲染
 };
 ```
 
-### Query Priorities (Testing Library)
+### 查询优先级（Testing Library）
 
-**Prefer accessible queries** (as users would interact):
+**优先使用可访问性查询**（与用户交互方式一致）：
 
 ```typescript
-// ✅ PREFERRED
+// ✅ 推荐
 screen.getByRole('button', { name: /submit/i });
 screen.getByLabelText('Email');
 screen.getByPlaceholderText('Enter name');
 
-// ⚠️ LAST RESORT
+// ⚠️ 最后手段
 screen.getByTestId('user-profile');
 
-// ❌ AVOID
+// ❌ 避免
 wrapper.find('.button-class');
 ```
 
-### Testing Async Behavior
+### 测试异步行为
 
 ```typescript
-// ✅ GOOD: waitFor with proper queries
+// ✅ GOOD：使用 waitFor 与正确的查询
 await waitFor(() => {
   expect(screen.getByText('Data loaded')).toBeInTheDocument();
 });
 
-// ✅ GOOD: waitForElementToBeRemoved
+// ✅ GOOD：使用 waitForElementToBeRemoved
 await waitForElementToBeRemoved(() => screen.queryByText('Loading...'));
 
-// ✅ GOOD: findBy queries (built-in waiting)
+// ✅ GOOD：使用 findBy 查询（内置等待）
 const element = await screen.findByText('Async content');
 
-// ❌ BAD: Fixed timeouts (flaky tests)
+// ❌ BAD：固定超时（测试不稳定）
 await new Promise((resolve) => setTimeout(resolve, 1000));
 ```
 
-### Mocking API Calls (MSW)
+### 模拟 API 调用（MSW）
 
-Use Mock Service Worker for API mocking:
+使用 Mock Service Worker 进行 API 模拟：
 
 ```typescript
 import { rest } from 'msw';
@@ -183,15 +183,15 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 ```
 
-## Backend Testing (NestJS/Jest)
+## 后端测试（NestJS/Jest）
 
-### Service Test Pattern
+### Service 测试模式
 
 ```typescript
 import { Factory } from 'fishery';
 import { faker } from '@faker-js/faker';
 
-// Define factory for User entity
+// 为 User 实体定义工厂
 const userFactory = Factory.define<User>(() => ({
   id: faker.string.uuid(),
   name: faker.person.fullName(),
@@ -240,7 +240,7 @@ describe('UserService', () => {
 });
 ```
 
-### Controller Test Pattern
+### Controller 测试模式
 
 ```typescript
 import { Factory } from 'fishery';
@@ -282,7 +282,7 @@ describe('UserController', () => {
 });
 ```
 
-### Integration Tests (E2E)
+### 集成测试（E2E）
 
 ```typescript
 describe('UserController (e2e)', () => {
@@ -312,7 +312,7 @@ describe('UserController (e2e)', () => {
 });
 ```
 
-## E2E Testing (Playwright)
+## 端到端测试（Playwright）
 
 ```typescript
 import { Factory } from 'fishery';
@@ -333,18 +333,18 @@ test.describe('User Management', () => {
     await page.fill('[name="email"]', userData.email);
     await page.click('text=Submit');
 
-    // ✅ Use proper waits
+    // ✅ 使用合理的等待
     await expect(page.locator(`text=${userData.name}`)).toBeVisible();
   });
 });
 ```
 
-## Best Practices
+## 最佳实践
 
-### Always Use Faker for Test Data
+### 始终使用 Faker 生成测试数据
 
 ```typescript
-// ✅ GOOD: Use faker
+// ✅ GOOD：使用 faker
 const user = {
   id: faker.string.uuid(),
   name: faker.person.fullName(),
@@ -352,16 +352,16 @@ const user = {
   age: faker.number.int({ min: 18, max: 100 }),
 };
 
-// ❌ BAD: Hardcoded data
+// ❌ BAD：硬编码数据
 const user = { id: '123', name: 'Test User' };
 ```
 
-### Use Factories Instead of Static Mocks
+### 使用工厂替代静态 Mock
 
-**Use Fishery** for creating test data factories with sensible defaults and overrides:
+**使用 Fishery** 创建具备合理默认值且易覆盖的测试数据工厂：
 
 ```typescript
-// ✅ GOOD: Fishery factory
+// ✅ GOOD：Fishery 工厂
 import { Factory } from 'fishery';
 import { faker } from '@faker-js/faker';
 
@@ -372,13 +372,13 @@ const userFactory = Factory.define<User>(({ sequence }) => ({
   age: faker.number.int({ min: 18, max: 100 }),
 }));
 
-// Usage - flexible and reusable
+// 用法 —— 灵活且可复用
 const user1 = userFactory.build();
 const user2 = userFactory.build({ age: 25 });
 const user3 = userFactory.build({ name: 'Specific Name' });
-const users = userFactory.buildList(5); // Create multiple
+const users = userFactory.buildList(5); // 批量创建
 
-// ❌ BAD: Static mock objects
+// ❌ BAD：静态 Mock 对象
 const mockUser1 = {
   id: '123',
   name: 'User 1',
@@ -387,22 +387,22 @@ const mockUser1 = {
 };
 ```
 
-Benefits of Fishery factories:
+Fishery 工厂的好处：
 
-- Easy to override specific properties per test
-- Consistent default values across tests
-- Single source of truth for mock structure
-- Better maintainability when types change
-- Built-in support for sequences and traits
+- 每个测试轻松覆盖特定属性
+- 测试之间默认值一致
+- Mock 结构的单一可信来源
+- 类型变更时更易维护
+- 内置序列与特征支持
 
-### Never Use Fixed Timeouts
+### 切勿使用固定超时
 
 ```typescript
-// ❌ BAD: Fixed timeout
+// ❌ BAD：固定超时
 await new Promise((resolve) => setTimeout(resolve, 1000));
 await page.waitForTimeout(2000);
 
-// ✅ GOOD: Wait for condition
+// ✅ GOOD：等待条件满足
 await waitFor(() => {
   expect(element).toBeInTheDocument();
 });
@@ -410,10 +410,10 @@ await waitFor(() => {
 await page.waitForSelector('[data-test="result"]');
 ```
 
-### Mock External Dependencies
+### 模拟外部依赖
 
 ```typescript
-// ✅ GOOD: Mock services
+// ✅ GOOD：模拟服务
 jest.mock('uiSrc/services/api', () => ({
   apiService: {
     get: jest.fn(),
@@ -422,28 +422,28 @@ jest.mock('uiSrc/services/api', () => ({
 }));
 ```
 
-### Test Edge Cases
+### 测试边界情况
 
-Always test:
+始终测试：
 
-- Empty arrays/objects
-- Null/undefined values
-- Error scenarios
-- Boundary conditions
-- Loading states
+- 空数组/对象
+- Null/undefined 值
+- 错误场景
+- 边界条件
+- 加载状态
 
-## Testing Checklist
+## 测试检查清单
 
-- [ ] All new features have tests
-- [ ] Tests use faker for data generation
-- [ ] No fixed timeouts (use waitFor)
-- [ ] Tests follow AAA pattern
-- [ ] Descriptive test names
-- [ ] Shared `renderComponent` helper used
-- [ ] Default props defined
-- [ ] Edge cases covered
-- [ ] Error scenarios tested
-- [ ] Mocks cleaned up between tests
-- [ ] Integration tests for API endpoints
-- [ ] E2E tests for critical flows
-- [ ] Coverage meets thresholds (80%+)
+- [ ] 所有新特性均有测试
+- [ ] 测试使用 faker 生成数据
+- [ ] 不使用固定超时（使用 waitFor）
+- [ ] 测试遵循 AAA 模式
+- [ ] 测试名称具描述性
+- [ ] 使用共享的 `renderComponent` 助手
+- [ ] 默认 props 已定义
+- [ ] 边界用例已覆盖
+- [ ] 错误场景已测试
+- [ ] 模拟在测试间正确清理
+- [ ] API 端点有集成测试
+- [ ] 关键流程有 E2E 测试
+- [ ] 覆盖率达到阈值（80%+）

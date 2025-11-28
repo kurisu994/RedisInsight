@@ -2,67 +2,67 @@
 alwaysApply: true
 ---
 
-# Frontend Development (React/Redux)
+# 前端开发（React/Redux）
 
-## Component Structure
+## 组件结构
 
-### Functional Components
+### 函数组件
 
-- Use **functional components with hooks** (no class components)
-- **Prefer named exports** over default exports
-- Keep components focused and single-responsibility
-- Extract complex logic into custom hooks
+- 使用**函数组件与 Hooks**（不使用类组件）
+- **优先使用具名导出**，避免默认导出
+- 保持组件聚焦、单一职责
+- 将复杂逻辑提取为自定义 Hooks
 
-### Component Folder Structure
+### 组件目录结构
 
-Each component in its own directory under `**/ComponentName`:
+每个组件位于其自身目录 `**/ComponentName` 下：
 
 ```
 ComponentName/
-  ComponentName.tsx          # Main component
-  ComponentName.styles.ts    # Styled-components styles (PascalCase)
-  ComponentName.types.ts     # TypeScript interfaces
-  ComponentName.spec.tsx     # Tests
-  ComponentName.constants.ts # Constants
-  ComponentName.story.tsx    # Storybook examples
-  hooks/                     # Custom hooks
-  components/                # Sub-components
-  utils/                     # Utility functions
+  ComponentName.tsx          # 主组件
+  ComponentName.styles.ts    # styled-components 样式（PascalCase）
+  ComponentName.types.ts     # TypeScript 接口
+  ComponentName.spec.tsx     # 测试
+  ComponentName.constants.ts # 常量
+  ComponentName.story.tsx    # Storybook 示例
+  hooks/                     # 自定义 Hooks
+  components/                # 子组件
+  utils/                     # 工具函数
 ```
 
-### Props Interface
+### Props 接口
 
-- Name as `ComponentNameProps`
-- Use separate interfaces for complex prop objects
-- Always use proper TypeScript types, never `any`
+- 命名为 `ComponentNameProps`
+- 复杂的 props 对象拆分为独立接口
+- 始终使用正确的 TS 类型，避免 `any`
 
-### Imports Order in Components
+### 组件中的导入顺序
 
-1. External dependencies (`react`, `redux`, etc.)
-2. Internal modules (aliases)
-3. Local imports (types, constants, hooks)
-4. Styles (always last: `import { Container } from './Component.styles'`)
+1. 外部依赖（`react`、`redux` 等）
+2. 内部模块（别名）
+3. 本地导入（types、constants、hooks）
+4. 样式（始终最后：`import { Container } from './Component.styles'`）
 
-### Barrel Files
+### Barrel 文件
 
-Use barrel files (`index.ts`) only when exporting **3 or more** items. Make sure exports appear in only one barrel file, not propagated up the chain.
+仅在导出**≥3 个**条目时使用 Barrel 文件（`index.ts`）。确保导出只出现在一个 Barrel 文件中，不要逐层上卷导出。
 
-## Styled Components
+## styled-components
 
-**We are migrating to styled-components** (deprecating SCSS modules).
+**我们正在迁移到 styled-components**（弃用 SCSS Modules）。
 
-### Encapsulate Styles in .styles.ts
+### 将样式封装到 .styles.ts
 
-Keep all component styles in dedicated `.styles.ts` files using styled-components. Use PascalCase for the filename to match the component name:
+使用 styled-components，将所有组件样式放在专用 `.styles.ts` 文件中。文件名使用 PascalCase 与组件名保持一致：
 
 ```
 ComponentName/
   ComponentName.tsx
   ComponentName.styles.ts  # ✅ PascalCase
-  # Not component-name.styles.ts ❌
+  # 不要使用 component-name.styles.ts ❌
 ```
 
-### Import Pattern
+### 导入模式
 
 ```typescript
 import { Container, Title, Content } from './Component.styles'
@@ -75,24 +75,24 @@ return (
 )
 ```
 
-### Use Layout Components Instead of div
+### 使用布局组件替代 div
 
-**Prefer `FlexGroup` over `div`** when creating flex containers:
+在创建 flex 容器时，**优先使用 `FlexGroup`** 而非 `div`：
 
 ```typescript
-// ✅ GOOD: Use FlexGroup
+// ✅ GOOD：使用 FlexGroup
 import { FlexGroup } from 'uiSrc/components/base/layout/flex'
 
 export const Wrapper = styled(FlexGroup)`
   user-select: none;
 `
 
-// Usage: Pass layout props as component props
+// 用法：以组件 props 传递布局属性
 <Wrapper align="center" justify="end">
   {children}
 </Wrapper>
 
-// ❌ BAD: Using div with hardcoded flex properties
+// ❌ BAD：在 div 中硬编码 flex 属性
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -100,12 +100,12 @@ export const Wrapper = styled.div`
 `
 ```
 
-### Pass Layout Props as Component Props
+### 以组件 Props 传递布局属性
 
-**Don't hardcode layout properties** in styled components when using layout components like `FlexGroup`. Pass them as props instead:
+在使用布局组件（如 `FlexGroup`）时，**不要在 styled 组件中硬编码布局属性**，应通过 props 传递：
 
 ```typescript
-// ✅ GOOD: Pass props in JSX
+// ✅ GOOD：在 JSX 中传递 props
 export const Wrapper = styled(FlexGroup)`
   user-select: none;
 `
@@ -114,7 +114,7 @@ export const Wrapper = styled(FlexGroup)`
   {children}
 </Wrapper>
 
-// ❌ BAD: Hardcoding in styled component
+// ❌ BAD：在 styled 组件中硬编码
 export const Wrapper = styled(FlexGroup)`
   align-items: center;
   justify-content: flex-end;
@@ -122,9 +122,9 @@ export const Wrapper = styled(FlexGroup)`
 `
 ```
 
-### Conditional Styling
+### 条件样式
 
-Use `$` prefix for transient props that shouldn't pass to DOM:
+对不应透传到 DOM 的瞬态 props 使用 `$` 前缀：
 
 ```typescript
 export const Button = styled.button<{ $isActive?: boolean }>`
@@ -132,12 +132,12 @@ export const Button = styled.button<{ $isActive?: boolean }>`
 `;
 ```
 
-### Avoid !important
+### 避免使用 !important
 
-**Never use `!important` in styled-components**. Styled-components handles CSS specificity through component hierarchy. If you need to override styles, use more specific selectors or adjust the component structure:
+**不要在 styled-components 中使用 `!important`**。styled-components 通过组件层级处理 CSS 特指度；如需覆盖样式，请使用更具体的选择器或调整组件结构：
 
 ```typescript
-// ✅ GOOD: Rely on CSS specificity
+// ✅ GOOD：依赖 CSS 特指度
 export const IconButton = styled(IconButton)<{ isOpen: boolean }>`
   ${({ isOpen }) =>
     isOpen &&
@@ -147,134 +147,134 @@ export const IconButton = styled(IconButton)<{ isOpen: boolean }>`
     `}
 `;
 
-// ❌ BAD: Using !important
+// ❌ BAD：使用 !important
 export const IconButton = styled(IconButton)`
   background-color: ${({ theme }) =>
     theme.semantic.color.background.primary200} !important;
 `;
 ```
 
-### Verify Type System Compatibility
+### 校验类型系统兼容性
 
-When using layout components or other typed components, verify your prop values match the type system:
+在使用布局组件或其他带类型的组件时，确保你的 props 值符合类型系统定义：
 
 ```typescript
-// Check the component's type definitions
-// FlexGroup accepts: align?: 'center' | 'stretch' | 'baseline' | 'start' | 'end'
-// Use valid values from the type system
+// 查看组件的类型定义
+// FlexGroup 接受：align?: 'center' | 'stretch' | 'baseline' | 'start' | 'end'
+// 使用类型系统中的有效值
 ```
 
-## State Management (Redux)
+## 状态管理（Redux）
 
-### When to Use What
+### 何时使用哪种状态
 
-- **Global State (Redux)**:
+- **全局状态（Redux）**：
 
-  - Data shared across multiple components
-  - Data persisting across routes
-  - Server state (API data)
-  - User preferences/settings
+  - 在多个组件之间共享的数据
+  - 跨路由持久的数据
+  - 服务器状态（API 数据）
+  - 用户偏好/设置
 
-- **Local State (useState)**:
+- **本地状态（useState）**：
 
-  - UI state (modals, dropdowns, tabs)
-  - Form inputs before submission
-  - Component-specific temporary data
+  - UI 状态（模态框、下拉、选项卡）
+  - 提交前的表单输入
+  - 组件特有的临时数据
 
-- **Derived State (Selectors)**:
-  - Computed values from Redux state
-  - Filtered/sorted lists
-  - Aggregated data
+- **派生状态（Selectors）**：
+  - 来自 Redux 状态的计算值
+  - 过滤/排序后的列表
+  - 聚合数据
 
-### Redux Toolkit Patterns
+### Redux Toolkit 模式
 
-#### Slice Structure
+#### Slice 结构
 
-- Use `createSlice` from Redux Toolkit
-- Define proper TypeScript types for state
-- Use `PayloadAction<T>` for action typing
-- Handle async with `extraReducers` and thunks
+- 使用 Redux Toolkit 的 `createSlice`
+- 为 state 定义合适的 TypeScript 类型
+- 使用 `PayloadAction<T>` 进行 action 类型标注
+- 通过 `extraReducers` 与 thunks 处理异步
 
-#### Thunks
+#### Thunk
 
-- Use `createAsyncThunk` for async operations
-- Handle pending, fulfilled, and rejected states
-- Use `rejectWithValue` for error handling
+- 使用 `createAsyncThunk` 处理异步操作
+- 正确处理 pending/fulfilled/rejected 状态
+- 使用 `rejectWithValue` 进行错误处理
 
-#### Selectors
+#### Selector
 
-- Create basic selectors for direct state access
-- Use `createSelector` from `reselect` for memoized/computed values
-- Keep selectors in separate `selectors.ts` file
+- 创建基础选择器以直接访问状态
+- 使用 `reselect` 的 `createSelector` 获取 memo 化/计算值
+- 将选择器放在独立的 `selectors.ts` 文件中
 
-## React Best Practices
+## React 最佳实践
 
-### Performance
+### 性能
 
-- Use `useCallback` for functions passed as props
-- Use `useMemo` for expensive computations
-- Use `React.memo` for expensive components
-- Avoid inline arrow functions in JSX props
+- 对作为 props 传递的函数使用 `useCallback`
+- 对开销较大的计算使用 `useMemo`
+- 对开销较大的组件使用 `React.memo`
+- 避免在 JSX props 中使用内联箭头函数
 
-### Effect Cleanup
+### Effect 清理
 
-Always clean up subscriptions, timers, and event listeners in `useEffect` return function.
+始终在 `useEffect` 的返回函数中清理订阅、定时器与事件监听。
 
-### Keys in Lists
+### 列表中的 Key
 
-- Use unique, stable IDs (not array indices)
-- Only use indices if list never reorders and items have no IDs
+- 使用唯一且稳定的 ID（不要使用数组索引）
+- 仅在列表永不重排且项没有 ID 时使用索引
 
-### Conditional Rendering
+### 条件渲染
 
-- Use early returns for loading/error states
-- Avoid deeply nested ternaries - extract to functions
+- 针对加载/错误状态使用早返回
+- 避免深度嵌套三元表达式——提取为函数
 
-## Custom Hooks
+## 自定义 Hooks
 
-### Extract Reusable Logic
+### 提取可复用逻辑
 
-Create custom hooks for reusable stateful logic. Store component-specific hooks in the component's `/hooks` directory.
+为可复用的有状态逻辑创建自定义 Hooks。将组件特有的 Hooks 存放在组件的 `/hooks` 目录。
 
-## Form Handling
+## 表单处理
 
-Use Formik with Yup for validation. Keep form logic in custom hooks when complex.
+使用 Formik + Yup 进行校验。复杂表单将逻辑封装在自定义 Hooks 中。
 
-## UI Components
+## UI 组件
 
-**⚠️ IMPORTANT**:
+**⚠️ 重要**：
 
-- We are **deprecating Elastic UI** components
-- Migrating to **Redis UI** (`@redis-ui/*`)
-- **Use internal wrappers** from `uiSrc/components/ui`
-- **DO NOT import directly** from `@redis-ui/*`
+- 我们正在**弃用 Elastic UI** 组件
+- 迁移到 **Redis UI**（`@redis-ui/*`）
+- **使用内部封装**（`uiSrc/components/ui`）
+- **不要直接从** `@redis-ui/*` **导入**
 
-### Component Usage
+### 组件使用
 
 ```typescript
-// ✅ GOOD: Import from internal wrappers
+// ✅ GOOD：从内部封装导入
 import { Button, Input, FlexGroup } from 'uiSrc/components/ui';
 
-// ❌ BAD: Don't import directly from @redis-ui
+// ❌ BAD：不要直接从 @redis-ui 导入
 import { Button } from '@redis-ui/components';
 
-// ❌ DEPRECATED: Don't use Elastic UI for new code
+// ❌ DEPRECATED：新代码不要使用 Elastic UI
 import { EuiButton } from '@elastic/eui';
 ```
 
-### Migration Guidelines
+### 迁移指南
 
-- ✅ Use internal wrappers from `uiSrc/components/ui` for all new features
-- ✅ Create internal wrappers for Redis UI components as needed
-- ✅ Replace Elastic UI when touching existing code
-- ❌ Do not import directly from `@redis-ui/*`
-- ❌ Do not add new Elastic UI imports
+- ✅ 新功能全部使用 `uiSrc/components/ui` 的内部封装
+- ✅ 按需为 Redis UI 组件创建内部封装
+- ✅ 修改既有代码时替换 Elastic UI
+- ❌ 不要直接从 `@redis-ui/*` 导入
+- ❌ 不要新增 Elastic UI 导入
 
-## Testing Components
+## 组件测试
 
-### Always Use Shared `renderComponent` Helper
+### 始终使用共享的 `renderComponent` 助手
 
-**CRITICAL**: Create a `renderComponent` helper function for each component test file:
+**关键**：每个组件测试文件创建一个 `renderComponent` 助手函数：
 
 ```typescript
 describe('MyComponent', () => {
@@ -296,29 +296,29 @@ describe('MyComponent', () => {
 
   it('should render', () => {
     renderComponent()
-    // assertions
+    // 断言
   })
 })
 ```
 
-Benefits:
+好处：
 
-- Centralized setup and providers
-- Default props in one place
-- Easy prop overrides per test
-- No duplicate render logic
+- 集中化的设置与 Providers
+- 默认 props 统一定义
+- 每个测试轻松覆盖 props
+- 无重复的渲染逻辑
 
-### Testing Redux
+### 测试 Redux
 
-Create a test store with `configureStore` for components connected to Redux.
+对连接 Redux 的组件，使用 `configureStore` 创建测试 store。
 
-## Key Principles
+## 关键原则
 
-1. **Separation of Concerns**: Keep styles, types, constants, logic separate
-2. **Colocate Related Code**: Keep sub-components and hooks close to usage
-3. **Consistent Naming**: Follow conventions across all components
-4. **Type Safety**: Always define proper types, never `any`
-5. **Testability**: Structure for easy testing with `renderComponent` helper
-6. **Styled Components**: Prefer styled-components over SCSS modules
-7. **Layout Components**: Use FlexGroup instead of div for flex containers, pass layout props as component props
-8. **Type Safety**: Verify prop values match component type definitions (e.g., FlexGroup's align/justify values)
+1. **关注点分离**：样式、类型、常量、逻辑分离
+2. **就近放置相关代码**：子组件与 Hooks 靠近使用处
+3. **命名一致**：在所有组件中遵循统一约定
+4. **类型安全**：始终定义正确类型，避免 `any`
+5. **可测试性**：结构化以便使用 `renderComponent` 辅助测试
+6. **styled-components**：优先使用 styled-components，弃用 SCSS Modules
+7. **布局组件**：使用 FlexGroup 替代 div 构建 flex 容器，并以组件 props 传递布局属性
+8. **类型安全**：校验 props 值与组件类型定义一致（如 FlexGroup 的 align/justify）

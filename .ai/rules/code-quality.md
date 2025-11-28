@@ -2,76 +2,76 @@
 alwaysApply: true
 ---
 
-# Code Quality Standards
+# 代码质量标准
 
-## Critical Rules
+## 关键规则
 
-- **ALWAYS run linter** after code changes: `yarn lint`
-- Linter must pass before committing
-- No console.log in production code (use console.warn/error only)
+- **每次改动后都运行 Linter**：`yarn lint`
+- 在提交前必须通过 Linter
+- 生产代码中不允许 `console.log`（仅允许 `console.warn/error`）
 
-## TypeScript Standards
+## TypeScript 规范
 
-### Essential Rules
+### 基本规则
 
-- Use TypeScript for all new code
-- **Avoid `any`** - use proper types or `unknown`
-- **Prefer interfaces** for object shapes
-- Use **type** for unions, intersections, primitives
-- Add explicit return types for non-obvious functions
-- Leverage type inference where clear
+- 所有新代码使用 TypeScript
+- **避免使用 `any`** —— 使用正确类型或 `unknown`
+- **对象结构优先使用 interface**
+- 联合、交叉、基础类型优先使用 **type**
+- 非显而易见的函数添加显式返回类型
+- 在明确情况下使用类型推断
 
-## Import Organization
+## 导入组织
 
-### Required Order (enforced by ESLint)
+### 必需顺序（由 ESLint 强制）
 
-1. External libraries (`react`, `lodash`, etc.)
-2. Built-in Node modules (`path`, `fs` - backend only)
-3. Internal modules with aliases (`uiSrc/*`, `apiSrc/*`)
-4. Sibling/parent relative imports
-5. Style imports (ALWAYS LAST)
+1. 外部库（`react`、`lodash` 等）
+2. Node 内置模块（`path`、`fs` —— 仅后端）
+3. 使用别名的内部模块（`uiSrc/*`、`apiSrc/*`）
+4. 同级/父级相对导入
+5. 样式导入（始终最后）
 
-### Module Aliases
+### 模块别名
 
 - `uiSrc/*` → `redisinsight/ui/src/*`
 - `apiSrc/*` → `redisinsight/api/src/*`
 - `desktopSrc/*` → `redisinsight/desktop/src/*`
 
-✅ **Use aliases**: `import { Button } from 'uiSrc/components/Button'`  
-❌ **Avoid relative**: `import { Button } from '../../../ui/src/components/Button'`
+✅ **使用别名**：`import { Button } from 'uiSrc/components/Button'`  
+❌ **避免相对路径层层上跳**：`import { Button } from '../../../ui/src/components/Button'`
 
-## Naming Conventions
+## 命名约定
 
-- **Components**: `PascalCase` - `UserProfile`
-- **Functions/Variables**: `camelCase` - `fetchUserProfile`
-- **Constants**: `UPPER_SNAKE_CASE` - `MAX_RETRY_ATTEMPTS`
-- **Booleans**: Use `is/has/should` prefix - `isLoading`, `hasError`
+- **组件**：`PascalCase` —— `UserProfile`
+- **函数/变量**：`camelCase` —— `fetchUserProfile`
+- **常量**：`UPPER_SNAKE_CASE` —— `MAX_RETRY_ATTEMPTS`
+- **布尔值**：使用 `is/has/should` 前缀 —— `isLoading`、`hasError`
 
-## SonarJS Rules
+## SonarJS 规则
 
-- Keep cognitive complexity low (refactor complex functions)
-- Extract duplicate strings to constants
-- Follow DRY principle - no duplicate code
-- Use immediate return (avoid unnecessary intermediate variables)
+- 降低认知复杂度（重构复杂函数）
+- 将重复字符串提取为常量
+- 遵循 DRY 原则 —— 不要重复代码
+- 使用即时返回（避免不必要的中间变量）
 
-## Best Practices
+## 最佳实践
 
-- Use destructuring for objects and arrays
-- Use template literals over string concatenation
-- Use `const` by default, `let` only when reassignment needed
-- Use descriptive variable names
-- Handle errors properly
-- Clean up subscriptions and timers
-- Use constants instead of magic numbers
+- 对对象与数组使用解构
+- 使用模板字符串而非拼接
+- 默认使用 `const`，仅在需要重赋值时使用 `let`
+- 使用具描述性的变量名
+- 正确处理错误
+- 清理订阅与定时器
+- 使用常量替代魔法数字
 
-## Pre-Commit Checklist
+## 提交前检查清单
 
-- [ ] `yarn lint` passes
-- [ ] No TypeScript errors
-- [ ] Import order is correct
-- [ ] No `any` types without reason
-- [ ] No console.log statements
-- [ ] No magic numbers
-- [ ] Descriptive variable names
-- [ ] Low cognitive complexity
-- [ ] No duplicate code
+- [ ] `yarn lint` 通过
+- [ ] 无 TypeScript 错误
+- [ ] 导入顺序正确
+- [ ] 无无故使用 `any`
+- [ ] 无 `console.log`
+- [ ] 无魔法数字
+- [ ] 变量命名具可读性
+- [ ] 认知复杂度低
+- [ ] 无重复代码

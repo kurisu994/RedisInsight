@@ -1,8 +1,8 @@
-# Commit Message Generation
+# 提交信息生成
 
-Generate concise, meaningful commit messages following RedisInsight conventions.
+生成简洁且有意义的提交信息，遵循 RedisInsight 的约定。
 
-## Format
+## 格式
 
 ```
 <type>(<scope>): <description>
@@ -12,28 +12,28 @@ Generate concise, meaningful commit messages following RedisInsight conventions.
 References: #RI-XXX
 ```
 
-## Types & Scopes
+## 类型与范围
 
-**Types**: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `perf`, `ci`
+**类型**：`feat`、`fix`、`refactor`、`test`、`docs`、`chore`、`perf`、`ci`
 
-**Scopes**: `api`, `ui`, `e2e`, `deps`
+**范围**：`api`、`ui`、`e2e`、`deps`
 
-## Rules
+## 规则
 
-**DO:**
-- ✅ Always include scope: `feat(api):`, `fix(ui):`
-- ✅ Use imperative mood: "add feature" not "added feature"
-- ✅ Start with lowercase after scope
-- ✅ Keep subject under 250 characters
-- ✅ Inspect all uncommitted files before generating
+**应该：**
+- ✅ 始终包含范围：`feat(api):`、`fix(ui):`
+- ✅ 使用祈使语气：使用 "add feature" 而不是 "added feature"
+- ✅ 范围后正文首字母小写
+- ✅ 主题不超过 250 字符
+- ✅ 在生成前检查所有未提交文件
 
-**DON'T:**
-- ❌ Omit scope
-- ❌ Use past tense
-- ❌ Add period at end
-- ❌ Use multiple scopes (split into separate commits)
+**不应该：**
+- ❌ 省略范围
+- ❌ 使用过去时
+- ❌ 以句号结尾
+- ❌ 使用多个范围（请拆分为独立提交）
 
-## Examples
+## 示例
 
 ```bash
 feat(ui): add user profile editing
@@ -43,22 +43,22 @@ test(e2e): add authentication tests
 chore(deps): upgrade React to 18.2
 ```
 
-## Issue References
+## 问题引用
 
-**JIRA**: `References: #RI-123` or `Fixes #RI-123`
-**GitHub**: `Fixes #123` or `Closes #123`
+**JIRA**：`References: #RI-123` 或 `Fixes #RI-123`
+**GitHub**：`Fixes #123` 或 `Closes #123`
 
-## Process
+## 流程
 
-1. Run `git status && git diff`
-2. Identify scope: API → `api`, UI → `ui`, Both → separate commits
-3. Identify type: New → `feat`, Bug → `fix`, Improvement → `refactor`
-4. Write description (what changed and why)
-5. Add issue reference in body
+1. 运行 `git status && git diff`
+2. 确定范围：API → `api`，UI → `ui`，若两者均涉及 → 请拆分为独立提交
+3. 确定类型：新增 → `feat`，缺陷 → `fix`，改进 → `refactor`
+4. 撰写描述（更改了什么以及为何）
+5. 在正文中添加问题引用
 
-## Multiple Scopes
+## 多个范围
 
-Split into separate commits:
+拆分为多个提交：
 
 ```bash
 # ✅ Good
@@ -74,12 +74,12 @@ References: #RI-123"
 git commit -m "feat(api,ui): add user feature"
 ```
 
-## Output Format
+## 输出格式
 
-Present in copyable format:
+以可复制格式呈现：
 
 ```markdown
-Based on the changes, here's your commit message:
+基于这些变更，这是你的提交信息：
 
 \`\`\`
 feat(api): add OAuth 2.0 authentication
@@ -91,19 +91,19 @@ References: #RI-123
 \`\`\`
 ```
 
-If multiple scopes:
+如果涉及多个范围：
 
 ```markdown
-Changes span multiple scopes. I recommend two commits:
+变更涉及多个范围。我建议拆分为两个提交：
 
-**Commit 1:**
+**提交 1：**
 \`\`\`
 feat(api): add OAuth endpoints
 
 References: #RI-123
 \`\`\`
 
-**Commit 2:**
+**提交 2：**
 \`\`\`
 feat(ui): add OAuth login interface
 

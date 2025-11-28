@@ -2,57 +2,57 @@
 alwaysApply: true
 ---
 
-# Backend Development (NestJS/API)
+# 后端开发（NestJS/API）
 
-## Module Structure
+## 模块结构
 
-### NestJS Architecture
+### NestJS 架构
 
-- Follow **modular architecture** (feature-based modules)
-- Use **dependency injection** throughout
-- **Separate concerns**: Controllers, Services, Repositories
-- Use **DTOs** for validation and data transfer
-- Apply **proper error handling** with NestJS exceptions
+- 遵循**模块化架构**（按特性拆分模块）
+- 全面使用**依赖注入**
+- **关注点分离**：Controller、Service、Repository
+- 使用 **DTO** 进行校验与数据传输
+- 使用 NestJS 异常进行**规范的错误处理**
 
-### Module Folder Structure
+### 模块目录结构
 
-Each feature module in its own directory under `api/src/`:
+每个特性模块放在 `api/src/` 下独立目录：
 
 ```
 feature/
-├── feature.module.ts           # Module definition
-├── feature.controller.ts       # REST endpoints
-├── feature.service.ts          # Business logic
-├── feature.service.spec.ts     # Service tests
-├── feature.controller.spec.ts  # Controller tests
-├── feature.types.ts            # Interfaces and types related to the feature
-├── dto/                        # Data transfer objects
+├── feature.module.ts           # 模块定义
+├── feature.controller.ts       # REST 端点
+├── feature.service.ts          # 业务逻辑
+├── feature.service.spec.ts     # Service 测试
+├── feature.controller.spec.ts  # Controller 测试
+├── feature.types.ts            # 与特性相关的接口与类型
+├── dto/                        # 数据传输对象
 │   ├── create-feature.dto.ts
 │   ├── update-feature.dto.ts
 │   └── feature.dto.ts
-├── entities/                   # TypeORM entities
-├── repositories/               # Custom repositories
-├── exceptions/                 # Custom exceptions
-├── guards/                     # Feature-specific guards
-├── decorators/                 # Custom decorators
-└── constants/                  # Feature constants
+├── entities/                   # TypeORM 实体
+├── repositories/               # 自定义仓库
+├── exceptions/                 # 自定义异常
+├── guards/                     # 特性相关的守卫
+├── decorators/                 # 自定义装饰器
+└── constants/                  # 特性常量
 ```
 
-### File Naming
+### 文件命名
 
-- **Modules**: `feature.module.ts`
-- **Controllers**: `feature.controller.ts`
-- **Services**: `feature.service.ts`
-- **DTOs**: `create-feature.dto.ts`, `update-feature.dto.ts`
-- **Entities**: `feature.entity.ts`
-- **Interfaces and types**: `feature.types.ts`
-- **Tests**: `feature.service.spec.ts`
-- **Constants**: `feature.constants.ts`
-- **Exceptions**: `feature-not-found.exception.ts`
+- **模块**：`feature.module.ts`
+- **控制器**：`feature.controller.ts`
+- **服务**：`feature.service.ts`
+- **DTO**：`create-feature.dto.ts`、`update-feature.dto.ts`
+- **实体**：`feature.entity.ts`
+- **接口与类型**：`feature.types.ts`
+- **测试**：`feature.service.spec.ts`
+- **常量**：`feature.constants.ts`
+- **异常**：`feature-not-found.exception.ts`
 
-### Constants Organization
+### 常量组织
 
-Store feature-specific constants in dedicated constants file:
+将特性相关常量存放在专用的常量文件中：
 
 ```typescript
 export const FEATURE_CONSTANTS = {
@@ -66,26 +66,26 @@ export const FEATURE_ERROR_MESSAGES = {
 } as const;
 ```
 
-### Imports Order
+### 导入顺序
 
-1. Node.js built-in modules
-2. External dependencies (`@nestjs/*`, etc.)
-3. Internal modules (using `apiSrc/*` alias)
-4. Local relative imports
+1. Node.js 内置模块
+2. 外部依赖（`@nestjs/*` 等）
+3. 内部模块（使用 `apiSrc/*` 别名）
+4. 本地相对导入
 
-## Service Layer
+## 服务层
 
-### Service Pattern
+### 服务模式
 
-- Inject dependencies via constructor
-- Use TypeORM repositories
-- Handle errors with NestJS exceptions
-- Use Logger for important operations
-- Keep business logic in services (not controllers)
+- 通过构造函数注入依赖
+- 使用 TypeORM 仓库
+- 使用 NestJS 异常处理错误
+- 对关键操作使用 Logger
+- 将业务逻辑放在服务层（不要放在控制器）
 
-### Dependency Injection
+### 依赖注入
 
-Always inject dependencies via constructor with proper decorators:
+通过构造函数并使用正确装饰器进行依赖注入：
 
 ```typescript
 @Injectable()
@@ -98,41 +98,41 @@ export class UserService {
 }
 ```
 
-## Controller Layer
+## 控制器层
 
-### Controller Pattern
+### 控制器模式
 
-- Keep controllers thin (delegate to services)
-- Use proper HTTP decorators (`@Get`, `@Post`, etc.)
-- Use `@Body`, `@Param`, `@Query` for inputs
-- Apply guards with `@UseGuards()`
-- Document with Swagger decorators
+- 控制器保持“瘦身”（委托给服务）
+- 使用正确的 HTTP 装饰器（`@Get`、`@Post` 等）
+- 输入使用 `@Body`、`@Param`、`@Query`
+- 通过 `@UseGuards()` 应用守卫
+- 使用 Swagger 装饰器进行文档化
 
-### HTTP Status Codes
+### HTTP 状态码
 
-- Use `@HttpCode()` decorator for non-standard codes
-- Return appropriate status codes (200, 201, 204, 400, 404, etc.)
+- 对非标准状态码使用 `@HttpCode()` 装饰器
+- 返回恰当的状态码（200、201、204、400、404 等）
 
-## Data Transfer Objects (DTOs)
+## 数据传输对象（DTO）
 
-### Validation
+### 校验
 
-Use `class-validator` decorators for validation:
+使用 `class-validator` 装饰器进行校验：
 
-- `@IsString()`, `@IsNumber()`, `@IsEmail()`
-- `@IsNotEmpty()`, `@IsOptional()`
-- `@MinLength()`, `@MaxLength()`
-- `@Min()`, `@Max()`
+- `@IsString()`、`@IsNumber()`、`@IsEmail()`
+- `@IsNotEmpty()`、`@IsOptional()`
+- `@MinLength()`、`@MaxLength()`
+- `@Min()`、`@Max()`
 
-### Swagger Documentation
+### Swagger 文档
 
-Use `@ApiProperty()` and `@ApiPropertyOptional()` for Swagger docs.
+使用 `@ApiProperty()` 与 `@ApiPropertyOptional()` 进行 Swagger 文档编制。
 
-## Error Handling
+## 错误处理
 
-### NestJS Exceptions
+### NestJS 异常
 
-Use appropriate exception types:
+使用合适的异常类型：
 
 - `NotFoundException` - 404
 - `BadRequestException` - 400
@@ -141,7 +141,7 @@ Use appropriate exception types:
 - `ConflictException` - 409
 - `InternalServerErrorException` - 500
 
-### Error Logging
+### 错误日志
 
 ```typescript
 private readonly logger = new Logger(ServiceName.name)
@@ -149,47 +149,47 @@ private readonly logger = new Logger(ServiceName.name)
 this.logger.error('Error message', error.stack, { context })
 ```
 
-## Redis Integration
+## Redis 集成
 
-### Redis Service Pattern
+### Redis 服务模式
 
-- Use RedisClient from `apiSrc/modules/redis`
-- Handle errors gracefully
-- Log Redis operations
-- Use try-catch for error handling
+- 使用 `apiSrc/modules/redis` 中的 RedisClient
+- 优雅地处理错误
+- 记录 Redis 操作日志
+- 使用 try-catch 进行错误处理
 
-## Code Quality
+## 代码质量
 
-### Cognitive Complexity (≤ 15)
+### 认知复杂度（≤ 15）
 
-- Use early returns to reduce nesting
-- Extract complex logic to separate functions
-- Avoid deeply nested conditions
+- 使用早返回减少嵌套
+- 将复杂逻辑提取为独立函数
+- 避免深度嵌套条件
 
-### No Duplicate Strings
+### 避免重复字符串
 
-Extract repeated strings to constants in constants file.
+将重复字符串提取到常量文件。
 
-## API Documentation (Swagger)
+## API 文档（Swagger）
 
-### Required Decorators
+### 必需装饰器
 
-- `@ApiTags()` - Group endpoints
-- `@ApiOperation()` - Describe operation
-- `@ApiResponse()` - Document responses
-- `@ApiParam()` - Document params
-- `@ApiQuery()` - Document query params
-- `@ApiBearerAuth()` - Auth requirement
+- `@ApiTags()` —— 分组端点
+- `@ApiOperation()` —— 描述操作
+- `@ApiResponse()` —— 文档化响应
+- `@ApiParam()` —— 文档化路径参数
+- `@ApiQuery()` —— 文档化查询参数
+- `@ApiBearerAuth()` —— 鉴权要求
 
-## Checklist
+## 清单
 
-- [ ] Services use dependency injection
-- [ ] DTOs have validation decorators
-- [ ] Controllers have Swagger documentation
-- [ ] Proper HTTP status codes used
-- [ ] Error handling with appropriate exceptions
-- [ ] Logging for important operations
-- [ ] Transactions for related DB operations
-- [ ] Configuration via ConfigService
-- [ ] Guards for authentication/authorization
-- [ ] Cognitive complexity ≤ 15
+- [ ] 服务层使用依赖注入
+- [ ] DTO 配有校验装饰器
+- [ ] 控制器具备 Swagger 文档
+- [ ] 正确使用 HTTP 状态码
+- [ ] 使用合适的异常进行错误处理
+- [ ] 对重要操作进行日志记录
+- [ ] 相关数据库操作使用事务
+- [ ] 通过 ConfigService 进行配置
+- [ ] 为认证/鉴权使用守卫
+- [ ] 认知复杂度 ≤ 15

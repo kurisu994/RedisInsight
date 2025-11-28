@@ -2,14 +2,14 @@
 alwaysApply: true
 ---
 
-# Branch Naming Conventions
+# 分支命名约定
 
-Use lowercase kebab-case with type prefix and issue/ticket identifier. **Branch names must match GitHub Actions workflow rules** (see `.github/workflows/enforce-branch-name-rules.yml`).
+使用小写的 kebab-case，带类型前缀与问题/工单标识。**分支名称必须符合 GitHub Actions 工作流规则**（参见 `.github/workflows/enforce-branch-name-rules.yml`）。
 
 ```bash
-# Pattern: <type>/<issue-ref>/<short-title>
+# 模式：<type>/<issue-ref>/<short-title>
 
-# INTERNAL (JIRA - RI-XXX)
+# 内部（JIRA - RI-XXX）
 feature/RI-123/add-user-profile
 bugfix/RI-789/memory-leak
 fe/feature/RI-567/add-dark-mode
@@ -18,31 +18,31 @@ docs/RI-333/update-docs
 test/RI-444/add-unit-tests
 e2e/RI-555/add-integration-tests
 
-# OPEN SOURCE (GitHub - XXX)
+# 开源（GitHub - XXX）
 feature/123/add-export-feature
 bugfix/789/fix-connection-timeout
 
-# Special branches
+# 特殊分支
 release/v2.0.0
 ric/RI-666/custom-prefix
 ```
 
-## Allowed Branch Types (GitHub Actions Enforced)
+## 允许的分支类型（由 GitHub Actions 强制）
 
-- `feature/` - New features and refactoring
-- `bugfix/` - Bug fixes
-- `fe/feature/` - Frontend-only features
-- `fe/bugfix/` - Frontend-only bug fixes
-- `be/feature/` - Backend-only features
-- `be/bugfix/` - Backend-only bug fixes
-- `docs/` - Documentation changes
-- `test/` - Test-related changes
-- `e2e/` - End-to-end test changes
-- `release/` - Release branches
-- `ric/` - Custom prefix for special cases
+- `feature/` —— 新特性与重构
+- `bugfix/` —— 缺陷修复
+- `fe/feature/` —— 仅前端特性
+- `fe/bugfix/` —— 仅前端缺陷修复
+- `be/feature/` —— 仅后端特性
+- `be/bugfix/` —— 仅后端缺陷修复
+- `docs/` —— 文档变更
+- `test/` —— 与测试相关的变更
+- `e2e/` —— 端到端测试变更
+- `release/` —— 发布分支
+- `ric/` —— 特殊场景的自定义前缀
 
-## Issue References
+## 问题引用
 
-- **Internal**: `RI-XXX` (JIRA ticket)
-- **Open Source**: `XXX` (GitHub issue number)
-- Use `#` only in commit messages, not branch names
+- **内部**：`RI-XXX`（JIRA 工单）
+- **开源**：`XXX`（GitHub Issue 编号）
+- `#` 仅用于提交信息，不用于分支名
