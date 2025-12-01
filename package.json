@@ -54,7 +54,10 @@
     "test:cov:component": "jest ./redisinsight/ui --group=component --coverage -w 1",
     "type-check:ui": "tsc --project redisinsight/ui --noEmit",
     "sb": "storybook dev -p 6006",
-    "build-sb": "storybook build"
+    "build-sb": "storybook build",
+    "build:dmg:arm64": "yarn build:prod && electron-builder build --mac --arm64 -p never -c.mac.notarize=false",
+    "build:dmg:x64": "yarn build:prod && electron-builder build --mac --x64 -p never -c.mac.notarize=false",
+    "build:dmg:universal": "yarn build:prod && electron-builder build --mac --universal -p never -c.mac.notarize=false"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
